@@ -1,36 +1,37 @@
-﻿@model ExpenseInputModel
+﻿@model ExpenseViewModel
 @{
 }
 <h1>Expense Tracker</h1>
 
 <form asp-controller="Home" asp-action="Index" method="post">
     <div>
-        <input asp-for="ExpenseName" value="" placeholder="Scrivi il nome della spesa" />
-        <input asp-for="Price" value="" placeholder="0,00" />
+        <input asp-for="Input.Name" value="" placeholder="Scrivi il nome della spesa" />
+        <input asp-for="Input.Price" value="" placeholder="Prezzo unitario: 0,00" />
+        <input asp-for="Input.Quantity" value="" placeholder="Quantità" />
         <button type="submit">Registra</button>
     </div>
 </form>
 
 
-@if(Model !=null && Model.ExpenseName != null)
+@if(Model !=null && Model.Expenses != null)
 {
     <div>
         <table>
             <tr>
                 <th>Spese</th>
                 <th>Prezzo</th>
+                <th>Quantità</th>
+                <th>Totale</th>
             </tr>
-            <tr>
-                <td>@Model.ExpenseName</td>
-                <td>@Model.Price.ToString("0.00")</td>
-            </tr>
-@*             @foreach (var expense in Model.ExpenseName)
+            @foreach (var expense in Model.Expenses)
             {
                 <tr>
                     <td>@expense.ExpenseName</td>
-                    <td>@expense.Price.ToString("0.00")</td>
+                    <td>@expense.UnitPrice.ToString("0.00")</td>
+                    <td>@expense.Quantity</td>
+                    <td>@expense.TotalPrice</td>
                 </tr>
-            } *@
+            }
         </table>
     </div>
 }

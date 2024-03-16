@@ -1,4 +1,5 @@
-﻿using ExpenseTracker.Models;
+﻿using ExpenseTracker.Entities;
+using ExpenseTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTracker.Controllers
@@ -15,13 +16,15 @@ namespace ExpenseTracker.Controllers
         [HttpPost]
         public IActionResult Index(ExpenseInputModel input)
         {
-            ExpenseInputModel model = new()
+            ExpenseViewModel model = new ExpenseViewModel();
+            model.Expenses.Add(new Expense
             {
-                ExpenseName = input.ExpenseName,
-                Price = input.Price,
-            };
-            //List<ExpenseInputModel> expenses = new List<ExpenseInputModel>();
-            //expenses.Add(input);
+                Id = Guid.NewGuid(),
+                ExpenseName = input.Name,
+                Quantity = (int)input.Quantity,
+                UnitPrice = (decimal)input.Price,
+                TotalPrice = (decimal)(input.Price * input.Quantity)
+            });
 
             return View(model);
         }

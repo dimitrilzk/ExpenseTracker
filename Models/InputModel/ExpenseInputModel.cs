@@ -1,4 +1,4 @@
-﻿namespace ExpenseTracker.Models
+﻿namespace ExpenseTracker.Models.InputModel
 {
     public class ExpenseInputModel
     {

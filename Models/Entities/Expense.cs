@@ -1,4 +1,4 @@
-﻿namespace ExpenseTracker.Entities
+﻿namespace ExpenseTracker.Models.Entities
 {
     public class Expense
     {

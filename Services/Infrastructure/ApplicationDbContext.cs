@@ -1,13 +1,13 @@
 ﻿using ExpenseTracker.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpenseTracker.Models.Data
+namespace ExpenseTracker.Services.Infrastructure
 {
-    public class ExpensesDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public ExpensesDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public DbSet<Expense> Expenses { get; set; }
 

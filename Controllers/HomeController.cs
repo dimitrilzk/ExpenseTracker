@@ -1,37 +1,35 @@
 ﻿using ExpenseTracker.Models.Entities;
 using ExpenseTracker.Models.InputModel;
 using ExpenseTracker.Models.ViewModel;
+using ExpenseTracker.Services.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
     public class HomeController : Controller
     {
-        [Route("/")]
-        public IActionResult Index()
+        private readonly ExpenseService _expenseService;
+
+        public HomeController(ExpenseService expenseService)
         {
-            return View();
+            _expenseService = expenseService;
+        }
+
+        [Route("/")]
+        public async Task<IActionResult> Index()
+        {
+            ExpenseViewModel viewModel = await _expenseService.GetAllExpenses();
+            return View(viewModel);
         }
 
         [Route("/")]
         [HttpPost]
-        public IActionResult Index(ExpenseInputModel input)
+        public async Task<IActionResult> Index(ExpenseInputModel input)
         {
-            ExpenseViewModel model = new ExpenseViewModel()
-            {
-                Expenses = new List<Expense>()
-            };
-
-            model.Expenses.Add(new Expense
-            {
-                Id = Guid.NewGuid(),
-                ExpenseName = input.Name,
-                Quantity = (int)input.Quantity,
-                UnitPrice = (decimal)input.Price,
-                TotalPrice = (decimal)(input.Price * input.Quantity)
-            });
-
-            return View(model);
+            
+            Expense expense = await _expenseService.AddExpense(input);
+            
+            return LocalRedirect("/");
         }
     }
 }
